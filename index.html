@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IaGenium - Automatize seu atendimento e venda 3x mais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(to bottom, #dbeafe, #ffffff);
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-gray-900">
+    <!-- Header -->
+    <header class="border-b border-gray-200 bg-white/95 backdrop-blur sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="bot" class="h-8 w-8 text-blue-600"></i>
+                    <span class="text-xl font-bold text-gray-900">IaGenium</span>
+                </div>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <button onclick="scrollToSection('beneficios')" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                        Benefícios
+                    </button>
+                    <button onclick="scrollToSection('planos')" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                        Planos
+                    </button>
+                    <button onclick="scrollToSection('depoimentos')" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                        Depoimentos
+                    </button>
+                    <button onclick="scrollToSection('faq')" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                        FAQ
+                    </button>
+                </nav>
+                <div class="flex items-center space-x-3">
+                    <button onclick="openLoginModal()" class="inline-flex items-center px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent rounded-md font-medium transition-colors">
+                        <i data-lucide="log-in" class="mr-2 h-4 w-4"></i>
+                        Login
+                    </button>
+                    <button onclick="scrollToSection('planos')" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition-colors">
+                        Assine Agora
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 modal-backdrop flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full relative">
+            <button onclick="closeLoginModal()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="h-5 w-5"></i>
+            </button>
+
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <div class="flex items-center justify-center mb-4">
+                        <i data-lucide="log-in" class="h-8 w-8 text-blue-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Acesse seu ChatBot</h2>
+                    <p class="text-gray-600">Entre na sua conta para gerenciar seus chatbots</p>
+                </div>
+
+                <form onsubmit="handleLogin(event)" class="space-y-4">
+                    <div class="space-y-2">
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input id="email" name="email" type="email" placeholder="seu@email.com" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+                        <input id="password" name="password" type="password" placeholder="••••••••" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-medium transition-colors">
+                        Acessar ChatBot
+                    </button>
+                </form>
+
+                <div class="text-center space-y-2 mt-4">
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-700">Esqueceu sua senha?</a>
+                    <div class="text-sm text-gray-600">
+                        Não tem conta? 
+                        <button onclick="closeLoginModal(); scrollToSection('planos')" class="text-blue-600 hover:text-blue-700 font-medium">
+                            Assine um plano
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="py-20 lg:py-32 gradient-bg">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 border border-blue-200 mb-6">
+                    ✨ Mais de 1.200 empresas já utilizam
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-gray-900">
+                    Automatize seu atendimento e <span class="text-blue-600">venda 3x mais</span> com ChatBot inteligente
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    Transforme visitantes em clientes automaticamente. Atendimento 24h que nunca dorme, nunca falha e sempre converte.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                    <button onclick="scrollToSection('planos')" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 text-lg rounded-md transition-colors">
+                        Assine Agora
+                        <i data-lucide="arrow-right" class="ml-2 h-5 w-5"></i>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600">+300%</div>
+                        <div class="text-sm text-gray-500">Aumento em vendas</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600">24/7</div>
+                        <div class="text-sm text-gray-500">Atendimento ativo</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600">1.200+</div>
+                        <div class="text-sm text-gray-500">Empresas confiam</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="beneficios" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">Por que escolher a IaGenium?</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Resultados comprovados que transformam seu negócio</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <i data-lucide="clock" class="h-12 w-12 text-blue-600 mx-auto mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Atendimento 24/7</h3>
+                    <p class="text-gray-600">Nunca perca um cliente. Atendimento automático disponível 24 horas por dia, 7 dias por semana.</p>
+                </div>
+
+                <div class="text-center bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <i data-lucide="trending-up" class="h-12 w-12 text-blue-600 mx-auto mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">+300% em Vendas</h3>
+                    <p class="text-gray-600">Aumento médio comprovado nas conversões dos nossos clientes em apenas 60 dias.</p>
+                </div>
+
+                <div class="text-center bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <i data-lucide="zap" class="h-12 w-12 text-blue-600 mx-auto mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Resposta Instantânea</h3>
+                    <p class="text-gray-600">Atendimento em segundos que impressiona clientes e aumenta a satisfação.</p>
+                </div>
+
+                <div class="text-center bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <i data-lucide="shield" class="h-12 w-12 text-blue-600 mx-auto mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Economia de 80%</h3>
+                    <p class="text-gray-600">Reduza custos operacionais eliminando a necessidade de equipe de atendimento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="planos" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">Planos que se adaptam ao seu negócio</h2>
+                <p class="text-xl text-gray-600">Escolha o plano ideal para automatizar seu atendimento</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 max-w-7xl mx-auto">
+                <!-- Plano Básico -->
+                <div class="relative bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <i data-lucide="message-circle" class="h-8 w-8 text-blue-600"></i>
+                        <span class="px-2 py-1 text-xs border border-gray-300 text-gray-700 rounded">Básico</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-1">R$ 107</h3>
+                    <p class="text-gray-600 mb-4">Chatbot Informativo</p>
+                    <ul class="space-y-2 text-sm mb-6">
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Respostas automáticas pré-configuradas</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Menu interativo (1, 2, 3)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Atendimento padronizado</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-medium transition-colors">
+                        Começar Agora
+                    </button>
+                </div>
+
+                <!-- Plano Essencial -->
+                <div class="relative bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <i data-lucide="bot" class="h-8 w-8 text-blue-600"></i>
+                        <span class="px-2 py-1 text-xs border border-gray-300 text-gray-700 rounded">Essencial</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-1">R$ 167</h3>
+                    <p class="text-gray-600 mb-4">Chatbot com IA Integrada</p>
+                    <ul class="space-y-2 text-sm mb-6">
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Tudo do Básico</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Inteligência artificial avançada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Mensagem personalizada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Interações naturais</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-medium transition-colors">
+                        Começar Agora
+                    </button>
+                </div>
+
+                <!-- Plano Premium -->
+                <div class="relative border-2 border-blue-500 bg-white rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-blue-600 text-white font-semibold px-3 py-1 rounded text-sm">Mais Popular</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <i data-lucide="calendar" class="h-8 w-8 text-blue-600"></i>
+                        <span class="px-2 py-1 text-xs border border-gray-300 text-gray-700 rounded">Premium</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-1">R$ 267</h3>
+                    <p class="text-gray-600 mb-4">Chatbot + Agendamento</p>
+                    <ul class="space-y-2 text-sm mb-6">
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Tudo do Essencial</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Agendamento automático</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Agenda integrada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Confirmações automáticas</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-medium transition-colors">
+                        Começar Agora
+                    </button>
+                </div>
+
+                <!-- Plano Master -->
+                <div class="relative bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <i data-lucide="zap" class="h-8 w-8 text-blue-600"></i>
+                        <span class="px-2 py-1 text-xs border border-gray-300 text-gray-700 rounded">Master</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-1">R$ 657</h3>
+                    <p class="text-gray-600 mb-4">Automação Total</p>
+                    <ul class="space-y-2 text-sm mb-6">
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Tudo do Premium</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Substitui 100% atendentes</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Integração pagamentos</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Plataformas externas</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-medium transition-colors">
+                        Começar Agora
+                    </button>
+                </div>
+
+                <!-- Plano Revendedor -->
+                <div class="relative border-2 border-dashed border-blue-500 bg-white rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <i data-lucide="users" class="h-8 w-8 text-blue-600"></i>
+                        <span class="bg-blue-600 text-white px-2 py-1 text-xs rounded">Parceiro</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-1">Seja um Revendedor</h3>
+                    <p class="text-gray-600 mb-4">Torne-se parceiro exclusivo</p>
+                    <ul class="space-y-2 text-sm mb-6">
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Comissões atrativas</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Suporte dedicado</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Material de vendas</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="check" class="h-4 w-4 text-blue-600 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-700">Treinamento completo</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-medium transition-colors">
+                        Seja um Revendedor
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="depoimentos" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">O que nossos clientes dizem</h2>
+                <p class="text-xl text-gray-600">Resultados reais de empresas que transformaram seu atendimento</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span class="text-blue-600 font-semibold">MS</span>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">Maria Silva</h4>
+                            <p class="text-gray-600">CEO, TechSolutions</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-500 mb-4">
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-700">"Aumentamos 3x nossas vendas em apenas 2 meses com a IaGenium. O chatbot funciona perfeitamente!"</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span class="text-blue-600 font-semibold">JS</span>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">João Santos</h4>
+                            <p class="text-gray-600">Diretor, InnovaCorp</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-500 mb-4">
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-700">"Eliminamos completamente a necessidade de atendentes. A economia foi impressionante!"</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span class="text-blue-600 font-semibold">AC</span>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">Ana Costa</h4>
+                            <p class="text-gray-600">Fundadora, DigitalPro</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-500 mb-4">
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                        <i data-lucide="star" class="h-4 w-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-700">"O atendimento 24h revolucionou nosso negócio. Nunca mais perdemos um cliente!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">Perguntas Frequentes</h2>
+                <p class="text-xl text-gray-600">Tire suas dúvidas sobre nossa solução</p>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Como funciona a integração?</h3>
+                    <p class="text-gray-700">A integração é simples e rápida. Nossa equipe técnica configura tudo em até 24 horas, sem necessidade de conhecimento técnico da sua parte.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Posso cancelar a qualquer momento?</h3>
+                    <p class="text-gray-700">Sim, você pode cancelar sua assinatura a qualquer momento sem multas ou taxas adicionais. Oferecemos total flexibilidade.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Há suporte técnico disponível?</h3>
+                    <p class="text-gray-700">Oferecemos suporte técnico completo via WhatsApp, email e chat. Nossa equipe está disponível para ajudar sempre que precisar.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Funciona em todas as plataformas?</h3>
+                    <p class="text-gray-700">Sim, nosso chatbot funciona no WhatsApp, Instagram, Facebook, site e outras plataformas principais de atendimento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-20 bg-blue-600">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">Pronto para revolucionar seu atendimento?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto text-blue-100">
+                Junte-se a mais de 1.200 empresas que já transformaram seus resultados com a IaGenium
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="scrollToSection('planos')" class="inline-flex items-center bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors">
+                    Assine Agora - Grátis
+                    <i data-lucide="arrow-right" class="ml-2 h-5 w-5"></i>
+                </button>
+                <button onclick="window.open('https://wa.me/5511999999999', '_blank')" class="inline-flex items-center border border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg bg-transparent font-semibold rounded-md transition-colors">
+                    Falar com Especialista
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t border-gray-200 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i data-lucide="bot" class="h-8 w-8 text-blue-600"></i>
+                        <span class="text-xl font-bold text-gray-900">IaGenium</span>
+                    </div>
+                    <p class="text-gray-600">Automatize seu atendimento e venda mais com inteligência artificial.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4 text-gray-900">Produto</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">Funcionalidades</a></li>
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">Integrações</a></li>
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4 text-gray-900">Empresa</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">Sobre</a></li>
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">Carreiras</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4 text-gray-900">Suporte</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">Central de Ajuda</a></li>
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">Contato</a></li>
+                        <li><a href="#" class="hover:text-gray-900 transition-colors">Status</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-600">
+                <p>&copy; 2024 IaGenium. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Smooth scroll function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Login modal functions
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        // Handle login form submission
+        function handleLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+
+            const serverUrl = 'https://seu-servidor.com/api/login';
+
+            fetch(serverUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.dashboardUrl || 'https://seu-servidor.com/dashboard';
+                } else {
+                    alert('Credenciais inválidas. Tente novamente.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro no login:', error);
+                alert('Erro ao conectar com o servidor. Tente novamente.');
+            });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginModal();
+            }
+        });
+    </script>
+</body>
+</html>
