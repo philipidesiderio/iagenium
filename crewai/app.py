@@ -24,8 +24,7 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 with st.sidebar:
-    st.image("https://raw.githubusercontent.com/joaomdmoura/crewAI/main/docs/crewai_logo.png",
-             use_column_width=True) if False else st.title("🤖 CrewAI Studio")
+    st.title("🤖 CrewAI Studio")
 
     st.subheader("⚙️ Configuração")
 
