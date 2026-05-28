@@ -16,7 +16,7 @@ services:
     volumes:
       - crewai_data:/app/data
     networks:
-      - crewai_net
+      - portainer_default
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.crewai.rule=Host(`crewai.iagenium.online`)"
@@ -28,8 +28,8 @@ services:
       - "traefik.http.services.crewai.loadbalancer.server.port=8501"
 
 networks:
-  crewai_net:
-    driver: bridge
+  portainer_default:
+    external: true
 
 volumes:
   crewai_data:
