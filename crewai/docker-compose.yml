@@ -16,29 +16,20 @@ services:
     volumes:
       - crewai_data:/app/data
     networks:
-      - traefik_public
+      - crewai_net
     labels:
-      # Traefik
       - "traefik.enable=true"
-      - "traefik.docker.network=traefik_public"
-
-      # Roteador HTTPS
       - "traefik.http.routers.crewai.rule=Host(`crewai.iagenium.online`)"
       - "traefik.http.routers.crewai.entrypoints=websecure"
       - "traefik.http.routers.crewai.tls=true"
       - "traefik.http.routers.crewai.tls.certresolver=letsencrypt"
-
-      # Redirect HTTP -> HTTPS
       - "traefik.http.routers.crewai-http.rule=Host(`crewai.iagenium.online`)"
       - "traefik.http.routers.crewai-http.entrypoints=web"
-      - "traefik.http.routers.crewai-http.middlewares=redirect-https@docker"
-
-      # Porta interna do Streamlit
       - "traefik.http.services.crewai.loadbalancer.server.port=8501"
 
 networks:
-  traefik_public:
-    external: true
+  crewai_net:
+    driver: bridge
 
 volumes:
   crewai_data:
