@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  crewai-studio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crewai-studio:latest
+    container_name: crewai-studio
+    restart: unless-stopped
+    environment:
+      # Configure sua OpenAI API Key aqui ou via variável de ambiente no Portainer
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      # Modelo padrão (pode ser alterado na interface)
+      - DEFAULT_MODEL=${DEFAULT_MODEL:-gpt-4o-mini}
+    volumes:
+      - crewai_data:/app/data
+    networks:
+      - traefik_public
+    labels:
+      # Traefik
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_public"
+
+      # Roteador HTTPS
+      - "traefik.http.routers.crewai.rule=Host(`crewai.iagenium.online`)"
+      - "traefik.http.routers.crewai.entrypoints=websecure"
+      - "traefik.http.routers.crewai.tls=true"
+      - "traefik.http.routers.crewai.tls.certresolver=letsencrypt"
+
+      # Redirect HTTP -> HTTPS
+      - "traefik.http.routers.crewai-http.rule=Host(`crewai.iagenium.online`)"
+      - "traefik.http.routers.crewai-http.entrypoints=web"
+      - "traefik.http.routers.crewai-http.middlewares=redirect-https@docker"
+
+      # Porta interna do Streamlit
+      - "traefik.http.services.crewai.loadbalancer.server.port=8501"
+
+networks:
+  traefik_public:
+    external: true
+
+volumes:
+  crewai_data:
+    driver: local
