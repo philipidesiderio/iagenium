@@ -11,8 +11,8 @@ services:
     environment:
       # Configure sua OpenAI API Key aqui ou via variável de ambiente no Portainer
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
-      # Modelo padrão (pode ser alterado na interface)
       - DEFAULT_MODEL=${DEFAULT_MODEL:-gpt-4o-mini}
+      - APP_PASSWORD=${APP_PASSWORD:-}
     volumes:
       - crewai_data:/app/data
     networks:

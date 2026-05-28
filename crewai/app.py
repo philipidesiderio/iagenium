@@ -20,6 +20,35 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def check_password():
+    password_env = os.getenv("APP_PASSWORD", "")
+    if not password_env:
+        return True
+    if st.session_state.get("authenticated"):
+        return True
+
+    st.markdown("""
+    <div style="max-width:380px;margin:100px auto;text-align:center;">
+        <h1>🤖 CrewAI Studio</h1>
+        <p style="color:#666;">Digite a senha para acessar</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        pwd = st.text_input("Senha", type="password", label_visibility="collapsed",
+                            placeholder="Digite a senha...")
+        if st.button("Entrar", use_container_width=True, type="primary"):
+            if pwd == password_env:
+                st.session_state.authenticated = True
+                st.rerun()
+            else:
+                st.error("Senha incorreta!")
+    return False
+
+if not check_password():
+    st.stop()
+
 if "history" not in st.session_state:
     st.session_state.history = []
 
